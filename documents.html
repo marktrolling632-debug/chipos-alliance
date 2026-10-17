@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#080b11">
+<meta name="description" content="奇普托斯蔚藍檔案主義共和國聯盟官方網站 · 與聯合國同級之國際政府間組織">
+<title>文檔中心 | 奇普托斯蔚藍檔案主義共和國聯盟</title>
+<link rel="icon" href="assets/img/badge_64.png">
+<style>
+/* =====================================================================
+   奇普托斯蔚藍檔案主義共和國聯盟 · CBARA
+   移動優先 (Mobile-First) 響應式樣式
+   配色：白 / 蔚藍 / 玄黑 三色體系 + 鎏金點綴
+   ===================================================================== */
+
+:root{
+  --white:#f5f8fb;
+  --blue:#0094e6;
+  --blue-lt:#5fc0f5;
+  --blue-dk:#0066a0;
+  --ink:#080b11;
+  --ink2:#10161f;
+  --ink3:#161d28;
+  --gold:#c5a059;
+  --gold-lt:#e8ce8e;
+  --text:#e8eef5;
+  --muted:#93a5b8;
+  --line:rgba(255,255,255,.09);
+  --line-blue:rgba(0,148,230,.3);
+  --nav-h:62px;
+  --ease:cubic-bezier(.22,.68,.35,1);
+}
+
+/* ---------- 基礎重置（移動優先） ---------- */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--nav-h) + 12px);
+  -webkit-text-size-adjust:100%;      /* 防止 iOS 橫屏字體放大 */
+  text-size-adjust:100%;
+}
+body{
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  background:var(--ink);
+  color:var(--text);
+  line-height:1.75;
+  font-size:16px;                      /* 手機基準字號 */
+  overflow-x:hidden;                   /* 防止橫向溢出 */
+  -webkit-font-smoothing:antialiased;
+  word-wrap:break-word;
+  overflow-wrap:break-word;            /* 長國名/長單詞強制換行 */
+}
+img{max-width:100%;height:auto;display:block;border:0}
+a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font-family:inherit;font-size:16px} /* iOS 防止 zoom */
+ul,ol{list-style:none}
+:focus-visible{outline:2px solid var(--blue-lt);outline-offset:2px}
+::selection{background:var(--blue);color:#fff}
+
+/* 滾動條（桌面） */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--blue),var(--blue-dk));border-radius:4px}
+
+/* ---------- 背景層 ---------- */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 12% -8%, rgba(0,148,230,.30), transparent 60%),
+    radial-gradient(760px 460px at 88% 6%, rgba(197,160,89,.15), transparent 56%),
+    linear-gradient(180deg,#070a0f 0%,#0a0e15 45%,#06080c 100%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(circle at 50% 28%,#000 0%,transparent 72%);
+  mask-image:radial-gradient(circle at 50% 28%,#000 0%,transparent 72%);
+}
+
+/* ---------- 進度條 ---------- */
+#progress{
+  position:fixed;top:0;left:0;height:3px;width:0;z-index:9999;
+  background:linear-gradient(90deg,var(--blue),var(--gold));
+  box-shadow:0 0 10px rgba(0,148,230,.8);
+}
+
+/* =====================================================================
+   頁首 / 導航（移動優先：漢堡選單）
+   ===================================================================== */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);
+  background:rgba(8,11,17,.82);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  transition:box-shadow .35s var(--ease),border-color .35s var(--ease);
+}
+.site-header.scrolled{
+  border-bottom-color:var(--line-blue);
+  box-shadow:0 4px 26px rgba(0,0,0,.55);
+}
+.header-inner{
+  max-width:1180px;margin:0 auto;height:100%;
+  padding:0 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.brand{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
+.brand img{
+  width:36px;height:36px;flex:none;border-radius:50%;
+  filter:drop-shadow(0 0 8px rgba(0,148,230,.55));
+}
+.brand-text{display:flex;flex-direction:column;min-width:0}
+.brand-cn{
+  font-size:.98rem;font-weight:800;color:#fff;letter-spacing:.5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.brand-en{
+  font-size:.55rem;color:var(--gold);letter-spacing:1.2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+/* 漢堡按鈕：44px 觸控區 */
+.nav-toggle{
+  flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,148,230,.12);border:1px solid var(--line-blue);border-radius:9px;
+  color:var(--blue-lt);font-size:1.15rem;cursor:pointer;transition:.25s;
+}
+.nav-toggle:hover{background:rgba(0,148,230,.24)}
+.nav-toggle:active{transform:scale(.94)}
+
+/* 導航列：手機為全屏下拉面板 */
+.main-nav{
+  position:fixed;top:var(--nav-h);left:0;right:0;
+  max-height:calc(100vh - var(--nav-h));overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  background:rgba(8,11,17,.985);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line-blue);
+  padding:8px 12px 16px;
+  transform:translateY(-102%);opacity:0;visibility:hidden;
+  transition:transform .36s var(--ease),opacity .28s var(--ease),visibility .28s;
+  box-shadow:0 18px 40px rgba(0,0,0,.6);
+}
+.main-nav.open{transform:translateY(0);opacity:1;visibility:visible}
+.main-nav a{
+  display:block;padding:13px 14px;border-radius:9px;
+  font-size:.94rem;color:var(--text);letter-spacing:.5px;
+  border-left:2px solid transparent;transition:.22s;
+}
+.main-nav a:hover,.main-nav a:focus{
+  background:rgba(0,148,230,.15);color:#fff;border-left-color:var(--blue);
+}
+.main-nav a.active{
+  background:linear-gradient(135deg,var(--blue),var(--blue-dk));
+  color:#fff;font-weight:700;border-left-color:var(--gold);
+  box-shadow:0 3px 12px rgba(0,148,230,.4);
+}
+/* 選單遮罩 */
+.nav-mask{
+  position:fixed;inset:0;top:var(--nav-h);z-index:998;
+  background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.3s;
+}
+.nav-mask.show{opacity:1;visibility:visible}
+
+/* =====================================================================
+   首頁 Hero
+   ===================================================================== */
+.hero{
+  position:relative;min-height:100svh;   /* svh 解決手機瀏覽器網址列跳動 */
+  min-height:100vh;                      /* 回退 */
+  display:flex;align-items:center;justify-content:center;
+  padding:calc(var(--nav-h) + 40px) 18px 70px;
+  overflow:hidden;text-align:center;
+}
+.hero-flag{
+  position:absolute;inset:0;z-index:0;
+  background:url("assets/img/flag.png") center/cover no-repeat;
+  opacity:.14;
+  filter:saturate(1.1);
+}
+.hero-veil{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(8,11,17,.55) 0%,rgba(8,11,17,.90) 100%);
+}
+.hero-content{position:relative;z-index:2;max-width:900px;width:100%}
+.hero-badge{
+  display:inline-block;margin-bottom:18px;padding:7px 16px;border-radius:999px;
+  font-size:.72rem;letter-spacing:2px;color:var(--blue-lt);
+  background:rgba(0,148,230,.12);border:1px solid var(--line-blue);
+}
+.hero-logo{
+  width:96px;height:96px;margin:0 auto 20px;
+  filter:drop-shadow(0 0 26px rgba(0,148,230,.6));
+  animation:floaty 4.5s ease-in-out infinite;
+}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.hero-title{
+  font-size:clamp(1.55rem,7.2vw,3.9rem);   /* 手機不過大 */
+  font-weight:900;color:#fff;line-height:1.28;letter-spacing:1px;
+}
+.gold-gradient{
+  background:linear-gradient(100deg,var(--blue-lt),var(--gold-lt),var(--blue-lt));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-sub{
+  margin-top:14px;font-size:clamp(.7rem,3vw,.95rem);
+  color:var(--gold);letter-spacing:2.5px;
+}
+.hero-desc{
+  margin-top:18px;font-size:clamp(.86rem,3.6vw,1.02rem);
+  color:var(--muted);max-width:620px;margin-left:auto;margin-right:auto;
+}
+.hero-actions{
+  margin-top:30px;display:flex;flex-direction:column;gap:11px;align-items:stretch;
+}
+.scroll-hint{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:2;
+  color:var(--muted);font-size:.74rem;letter-spacing:2px;
+  animation:bob 2.1s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0);opacity:.55}50%{transform:translate(-50%,7px);opacity:1}}
+
+/* ---------- 按鈕 ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 26px;border-radius:10px;font-size:.9rem;font-weight:700;
+  letter-spacing:1px;transition:.3s var(--ease);border:1px solid transparent;
+  min-height:48px;                      /* 觸控友好 */
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--blue),var(--blue-dk));color:#fff;
+  box-shadow:0 6px 22px rgba(0,148,230,.42);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,148,230,.55)}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),#9d7d3d);color:#181206;
+  box-shadow:0 6px 22px rgba(197,160,89,.4);
+}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-ghost{
+  color:#fff;border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.03);
+}
+.btn-ghost:hover{border-color:var(--blue);background:rgba(0,148,230,.14)}
+
+/* =====================================================================
+   通用區塊
+   ===================================================================== */
+.container{width:100%;max-width:1180px;margin:0 auto;padding:0 16px}
+.section{padding:56px 0;position:relative}
+.section-alt{background:linear-gradient(180deg,transparent,rgba(0,148,230,.045),transparent)}
+.section-head{margin-bottom:32px}
+.section-head h2{
+  font-size:clamp(1.35rem,5.4vw,2.1rem);color:#fff;font-weight:900;letter-spacing:.5px;
+}
+.section-head .muted{margin-top:8px;font-size:.88rem}
+.section-link{display:inline-block;margin-top:10px;color:var(--blue-lt);font-size:.86rem}
+.rule{width:56px;height:3px;margin-top:12px;background:linear-gradient(90deg,var(--blue),var(--gold));border-radius:2px}
+.muted{color:var(--muted)}
+.gold{color:var(--gold-lt)}
+
+/* 分頁 Hero */
+.page-hero{
+  position:relative;padding:calc(var(--nav-h) + 46px) 0 46px;text-align:center;overflow:hidden;
+}
+.page-hero .hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:url("assets/img/flag.png") center/cover no-repeat;opacity:.10;
+}
+.page-hero .hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(8,11,17,.7),rgba(8,11,17,.95));
+}
+.page-hero .container{position:relative;z-index:1}
+.page-hero h1{
+  font-size:clamp(1.5rem,6.4vw,2.7rem);color:#fff;font-weight:900;letter-spacing:.5px;line-height:1.3;
+}
+.page-hero .hero-desc{
+  margin-top:14px;color:var(--muted);font-size:clamp(.84rem,3.5vw,.98rem);
+  max-width:660px;margin-left:auto;margin-right:auto;
+}
+.breadcrumb{
+  font-size:.78rem;color:var(--muted);margin-bottom:14px;letter-spacing:.5px;
+}
+.breadcrumb a{color:var(--blue-lt)}
+
+/* ---------- 統計 ---------- */
+.stats{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;   /* 手機 2 欄 */
+}
+.stat{
+  background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.012));
+  border:1px solid var(--line);border-radius:13px;padding:22px 12px;text-align:center;
+  position:relative;overflow:hidden;transition:.35s var(--ease);
+}
+.stat::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--gold));
+}
+.stat:hover{transform:translateY(-4px);border-color:var(--line-blue)}
+.stat-num{
+  display:block;font-size:clamp(1.7rem,8vw,2.5rem);font-weight:900;
+  color:var(--blue-lt);line-height:1.1;
+}
+.stat-label{display:block;margin-top:7px;font-size:.78rem;color:var(--muted);letter-spacing:.5px}
+
+/* ---------- 網格（自動適配，手機單欄） ---------- */
+.grid-2,.grid-3,.grid-4{
+  display:grid;gap:14px;grid-template-columns:1fr;   /* 手機：單欄 */
+}
+
+/* ---------- 資訊卡 ---------- */
+.info-card{
+  background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012));
+  border:1px solid var(--line);border-radius:14px;padding:24px 20px;
+  transition:.35s var(--ease);
+}
+.info-card:hover{transform:translateY(-5px);border-color:var(--line-blue);box-shadow:0 14px 34px rgba(0,0,0,.42)}
+.info-icon{
+  width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:14px;
+  background:linear-gradient(135deg,rgba(0,148,230,.22),rgba(0,148,230,.05));
+  border:1px solid var(--line-blue);
+}
+.info-card h4{color:#fff;font-size:1.06rem;margin-bottom:8px;line-height:1.5}
+.info-card p{font-size:.9rem}
+
+/* ---------- 快速入口卡 ---------- */
+.entry-card{
+  display:flex;align-items:center;gap:16px;padding:20px;border-radius:13px;
+  background:linear-gradient(150deg,rgba(0,148,230,.12),rgba(255,255,255,.02));
+  border:1px solid var(--line-blue);transition:.3s var(--ease);
+}
+.entry-card:hover{transform:translateY(-4px);border-color:var(--gold);background:linear-gradient(150deg,rgba(197,160,89,.16),rgba(255,255,255,.03))}
+.entry-num{
+  flex:none;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dk));color:#fff;font-weight:900;font-size:1rem;
+}
+.entry-card h4{color:#fff;font-size:1rem;margin-bottom:4px}
+.entry-card p{font-size:.82rem}
+
+/* =====================================================================
+   成員國 / 觀察員（重點：完整顯示國名）
+   ===================================================================== */
+.filters{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;
+  padding-bottom:4px;                    /* 允許內部換行 */
+}
+.filter-btn{
+  padding:9px 16px;border-radius:999px;font-size:.82rem;cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);
+  transition:.25s;min-height:38px;white-space:nowrap;
+}
+.filter-btn:hover{color:#fff;border-color:var(--line-blue)}
+.filter-btn:active{transform:scale(.95)}
+.filter-btn.active{
+  background:linear-gradient(135deg,var(--blue),var(--blue-dk));color:#fff;
+  border-color:transparent;font-weight:700;box-shadow:0 3px 12px rgba(0,148,230,.4);
+}
+
+.member-grid{display:grid;grid-template-columns:1fr;gap:13px}   /* 手機單欄 */
+.member-card{
+  display:flex;align-items:center;gap:14px;padding:16px;border-radius:13px;
+  background:linear-gradient(150deg,rgba(255,255,255,.05),rgba(255,255,255,.012));
+  border:1px solid var(--line);transition:.3s var(--ease);
+}
+.member-card:hover{transform:translateY(-3px);border-color:var(--line-blue);background:linear-gradient(150deg,rgba(0,148,230,.13),rgba(255,255,255,.02))}
+.member-flag{
+  flex:none;width:46px;height:34px;border-radius:5px;
+  box-shadow:0 2px 9px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.16);
+}
+.member-body{flex:1;min-width:0}   /* min-width:0 讓長國名正常換行 */
+.member-no{
+  display:inline-block;font-size:.68rem;color:var(--gold);letter-spacing:1.5px;font-weight:700;
+}
+.member-card h3{
+  font-size:.98rem;color:#fff;font-weight:700;line-height:1.45;margin-top:2px;
+  overflow-wrap:anywhere;               /* 長國名完整換行不截斷 */
+}
+.member-en{
+  display:block;font-size:.72rem;color:var(--muted);margin-top:3px;letter-spacing:.4px;
+  overflow-wrap:anywhere;
+}
+.badge{
+  display:inline-block;margin-top:7px;padding:3px 10px;border-radius:999px;
+  font-size:.68rem;letter-spacing:.6px;font-weight:700;
+}
+.badge-member{background:rgba(0,148,230,.18);color:var(--blue-lt);border:1px solid var(--line-blue)}
+.badge-observer{background:rgba(197,160,89,.16);color:var(--gold-lt);border:1px solid rgba(197,160,89,.35)}
+
+.empty-state{
+  text-align:center;padding:40px 18px;color:var(--muted);font-size:.9rem;
+  border:1px dashed var(--line);border-radius:13px;
+}
+
+/* 觀察員 */
+.observer-list{display:grid;grid-template-columns:1fr;gap:14px}
+.observer-item{
+  display:flex;align-items:flex-start;gap:14px;padding:18px;border-radius:13px;
+  background:linear-gradient(150deg,rgba(197,160,89,.09),rgba(255,255,255,.015));
+  border:1px solid rgba(197,160,89,.22);transition:.3s var(--ease);
+}
+.observer-item:hover{transform:translateY(-3px);border-color:rgba(197,160,89,.5)}
+.observer-flag{
+  flex:none;width:46px;height:34px;border-radius:5px;
+  box-shadow:0 2px 9px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.16);
+}
+.observer-body{flex:1;min-width:0}
+.observer-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.observer-head h3{font-size:1rem;color:#fff;font-weight:700;line-height:1.45;overflow-wrap:anywhere}
+.observer-body .member-en{display:block;margin-top:4px}
+.observer-body p{font-size:.85rem;margin-top:8px}
+
+.notice-card{
+  margin-top:26px;padding:20px;border-radius:13px;
+  background:rgba(0,148,230,.09);border:1px solid var(--line-blue);
+}
+.notice-card h4{color:var(--blue-lt);font-size:1rem;margin-bottom:8px}
+.notice-card p{font-size:.87rem}
+.notice-card a{color:var(--gold-lt);text-decoration:underline}
+
+/* =====================================================================
+   憲章條文
+   ===================================================================== */
+.charter-wrap{display:grid;grid-template-columns:1fr;gap:26px}  /* 手機單欄 */
+.toc{
+  position:static;background:rgba(255,255,255,.03);border:1px solid var(--line);
+  border-radius:13px;padding:16px 13px;
+}
+.toc-title{
+  color:var(--gold);font-weight:800;letter-spacing:2px;font-size:.82rem;
+  padding-bottom:11px;border-bottom:1px solid var(--line);margin-bottom:10px;
+}
+.toc-links{display:flex;flex-direction:column;gap:2px}
+.toc a{
+  display:block;color:var(--muted);font-size:.82rem;padding:9px 11px;border-radius:7px;
+  transition:.22s;border-left:2px solid transparent;line-height:1.5;
+}
+.toc a:hover{color:#fff;background:rgba(0,148,230,.12)}
+.toc a.on{color:var(--blue-lt);border-left-color:var(--blue);background:rgba(0,148,230,.15);font-weight:700}
+
+.article{
+  background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:14px;
+  padding:24px 20px;margin-bottom:18px;scroll-margin-top:calc(var(--nav-h) + 16px);
+  transition:.4s var(--ease);
+}
+.article.on{border-color:rgba(197,160,89,.45);box-shadow:0 10px 32px rgba(0,0,0,.4)}
+.art-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.art-no{
+  flex:none;width:42px;height:42px;border-radius:10px;
+  background:linear-gradient(135deg,var(--gold),#9d7d3d);color:#181206;
+  font-weight:900;font-size:1rem;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 12px rgba(197,160,89,.4);
+}
+.art-title{font-size:1.16rem;color:#fff;font-weight:800;line-height:1.45;overflow-wrap:anywhere}
+.art-body{color:#d3dee9;font-size:.93rem}
+.art-body ol,.art-body ul{padding-left:20px;margin-top:10px}
+.art-body li{margin:9px 0;padding-left:5px;line-height:1.8}
+.art-body strong{color:var(--blue-lt)}
+.art-body p+p{margin-top:12px}
+.preamble{background:linear-gradient(135deg,rgba(0,148,230,.13),rgba(197,160,89,.06));border-color:var(--line-blue)}
+.covenant{
+  background:linear-gradient(160deg,rgba(197,160,89,.15),rgba(0,148,230,.06));
+  border:1px solid rgba(197,160,89,.45);text-align:center;padding:38px 22px;
+}
+.covenant .seal{font-size:2.6rem;margin-bottom:12px}
+.covenant h3{color:var(--gold-lt);font-size:1.35rem;letter-spacing:1.5px;line-height:1.5}
+.covenant p{color:#dde8f2;margin-top:14px;font-size:1rem;line-height:2}
+
+/* =====================================================================
+   組織架構 / 時間軸
+   ===================================================================== */
+.org-tier{
+  border:1px solid var(--line);border-radius:13px;padding:20px;margin-bottom:14px;
+  background:linear-gradient(150deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+}
+.org-tier.lead{
+  border-color:rgba(197,160,89,.5);
+  background:linear-gradient(150deg,rgba(197,160,89,.14),rgba(0,148,230,.05));
+}
+.org-tier h4{color:var(--gold-lt);margin-bottom:12px;font-size:1rem;line-height:1.5}
+.org-nodes{display:grid;grid-template-columns:1fr;gap:10px}
+.org-node{
+  padding:12px 14px;border-radius:9px;text-align:center;font-size:.88rem;
+  background:rgba(0,148,230,.13);border:1px solid var(--line-blue);color:#fff;
+}
+
+.timeline{position:relative;padding-left:24px}
+.timeline::before{
+  content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(var(--blue),var(--gold));
+}
+.tl-item{position:relative;padding:0 0 24px 18px}
+.tl-item::before{
+  content:"";position:absolute;left:-24px;top:6px;width:13px;height:13px;border-radius:50%;
+  background:var(--ink);border:3px solid var(--blue);box-shadow:0 0 0 3px rgba(0,148,230,.15);
+}
+.tl-year{color:var(--gold-lt);font-weight:800;font-size:.88rem;letter-spacing:1px}
+.tl-item h4{color:#fff;margin:5px 0;font-size:1.02rem;line-height:1.5;overflow-wrap:anywhere}
+.tl-item p{color:var(--muted);font-size:.88rem}
+
+/* =====================================================================
+   新聞 / 文檔
+   ===================================================================== */
+.news-list{display:grid;gap:12px}
+.news-row{
+  display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:12px;
+  background:rgba(255,255,255,.028);border:1px solid var(--line);transition:.3s var(--ease);
+}
+.news-row:hover{transform:translateY(-3px);border-color:var(--line-blue);background:rgba(0,148,230,.08)}
+.news-date{font-size:.74rem;color:var(--gold);letter-spacing:1px;font-weight:700}
+.news-tag{
+  align-self:flex-start;padding:3px 10px;border-radius:999px;font-size:.68rem;font-weight:700;
+}
+.tag-meeting{background:rgba(0,148,230,.2);color:var(--blue-lt)}
+.tag-member{background:rgba(197,160,89,.18);color:var(--gold-lt)}
+.tag-charter{background:rgba(255,255,255,.09);color:var(--muted)}
+.news-title{color:#fff;font-size:.95rem;line-height:1.6;overflow-wrap:anywhere}
+
+.doc-group{margin-bottom:34px}
+.doc-group h3{
+  color:var(--gold-lt);font-size:1.05rem;margin-bottom:14px;
+  padding-left:11px;border-left:3px solid var(--gold);line-height:1.5;
+}
+.doc-card{
+  display:flex;align-items:center;gap:13px;padding:16px;border-radius:11px;
+  background:rgba(255,255,255,.03);border:1px solid var(--line);transition:.3s var(--ease);
+  margin-bottom:10px;
+}
+.doc-card:hover{border-color:var(--blue);background:rgba(0,148,230,.1);transform:translateX(4px)}
+.doc-tag{
+  flex:none;padding:4px 10px;border-radius:6px;font-size:.68rem;font-weight:700;letter-spacing:.6px;
+}
+.doc-tag.core{background:linear-gradient(135deg,var(--gold),#9d7d3d);color:#181206}
+.doc-tag.rule{background:rgba(0,148,230,.2);color:var(--blue-lt);border:1px solid var(--line-blue)}
+.doc-tag.doc{background:rgba(255,255,255,.08);color:var(--muted)}
+.doc-text{flex:1;min-width:0}
+.doc-text b{display:block;color:#fff;font-size:.95rem;line-height:1.5;overflow-wrap:anywhere}
+.doc-text span{font-size:.8rem;color:var(--muted)}
+.doc-arrow{color:var(--muted);font-size:1.2rem;flex:none}
+
+/* =====================================================================
+   表單
+   ===================================================================== */
+.form-wrap{
+  background:rgba(255,255,255,.03);border:1px solid var(--line);
+  border-radius:15px;padding:24px 18px;
+}
+.form-row{display:grid;grid-template-columns:1fr;gap:0}
+.fgroup{margin-bottom:16px}
+.fgroup label{display:block;margin-bottom:7px;color:var(--muted);font-size:.85rem;letter-spacing:.4px}
+.fgroup label i{color:var(--gold);font-style:normal}
+.fgroup input,.fgroup select,.fgroup textarea{
+  width:100%;padding:13px 14px;border-radius:9px;
+  background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.13);
+  color:#fff;font-size:16px;transition:.25s;min-height:48px;   /* 16px 防 iOS zoom */
+}
+.fgroup input:focus,.fgroup select:focus,.fgroup textarea:focus{
+  outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,148,230,.18);
+}
+.fgroup textarea{min-height:120px;resize:vertical;line-height:1.7}
+.fgroup select{
+  -webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='13' height='13' fill='%235fc0f5'><path d='M3 5l3.5 3.5L10 5z'/></svg>");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;
+}
+.form-note{margin-top:12px;font-size:.8rem;color:var(--muted);text-align:center}
+
+/* ---------- 聯絡卡 ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr;gap:13px}
+.contact-card{
+  padding:22px;border-radius:13px;background:rgba(255,255,255,.03);
+  border:1px solid var(--line);transition:.3s var(--ease);
+}
+.contact-card:hover{border-color:var(--line-blue);transform:translateY(-4px)}
+.contact-card h4{color:var(--blue-lt);margin-bottom:8px;font-size:1.02rem;line-height:1.5}
+.contact-card p{font-size:.88rem}
+
+/* =====================================================================
+   旗幟橫幅
+   ===================================================================== */
+.flag-banner{
+  position:relative;border-radius:14px;overflow:hidden;
+  border:1px solid var(--line);box-shadow:0 16px 44px rgba(0,0,0,.5);
+}
+.flag-banner img{width:100%;opacity:.92}
+.flag-cap{
+  position:absolute;bottom:0;left:0;right:0;padding:12px 16px;
+  background:linear-gradient(0deg,rgba(0,0,0,.88),transparent);
+  color:var(--gold-lt);font-size:.78rem;letter-spacing:.8px;line-height:1.6;
+}
+
+/* =====================================================================
+   頁尾
+   ===================================================================== */
+.site-footer{
+  background:#05070a;border-top:1px solid var(--line);
+  padding:44px 0 26px;margin-top:36px;text-align:center;
+}
+.footer-brand{
+  display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:26px;
+}
+.footer-brand img{width:62px;height:62px;border-radius:50%;filter:drop-shadow(0 0 14px rgba(0,148,230,.5))}
+.footer-brand h4{color:#fff;font-size:1.02rem;font-weight:800;line-height:1.5}
+.footer-brand p{font-size:.8rem;margin-top:5px}
+.footer-meta p{font-size:.76rem;color:var(--muted);line-height:1.9;opacity:.8}
+
+/* =====================================================================
+   入場動畫
+   ===================================================================== */
+.fade-in{opacity:0;transform:translateY(26px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.fade-in.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .fade-in{opacity:1;transform:none;transition:none}
+  .hero-logo,.scroll-hint{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* =====================================================================
+   📱 → 📲 斷點：小手機 → 平板 → 桌機（移動優先遞增）
+   ===================================================================== */
+
+/* ---- ≥400px：極小屏微調 ---- */
+@media (min-width:400px){
+  .stats{gap:14px}
+  .hero-logo{width:110px;height:110px}
+}
+
+/* ---- ≥560px：大手機 / 小平板 ---- */
+@media (min-width:560px){
+  .container{padding:0 22px}
+  .section{padding:64px 0}
+  .hero{padding:calc(var(--nav-h) + 50px) 24px 76px}
+  .hero-actions{flex-direction:row;justify-content:center;flex-wrap:wrap}
+  .hero-actions .btn{flex:none}
+  .grid-2{grid-template-columns:repeat(2,1fr)}
+  .member-grid{grid-template-columns:repeat(2,1fr)}
+  .observer-list{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:repeat(2,1fr)}
+  .form-row{grid-template-columns:repeat(2,1fr);gap:0 16px}
+  .org-nodes{grid-template-columns:repeat(2,1fr)}
+  .news-row{flex-direction:row;align-items:center;gap:14px;flex-wrap:wrap}
+  .news-title{flex:1;min-width:200px}
+  .footer-brand{flex-direction:row;justify-content:center;text-align:left}
+}
+
+/* ---- ≥768px：平板 ---- */
+@media (min-width:768px){
+  body{font-size:16.5px}
+  .container{padding:0 28px}
+  .section{padding:76px 0}
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .grid-3{grid-template-columns:repeat(2,1fr)}
+  .member-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-title{font-size:clamp(2.4rem,5.4vw,3.6rem)}
+  .hero-logo{width:128px;height:128px}
+  .article{padding:30px 30px}
+  .form-wrap{padding:32px}
+  .covenant{padding:46px 34px}
+  .toc{max-height:calc(100vh - var(--nav-h) - 40px);overflow-y:auto}
+}
+
+/* ---- ≥1024px：桌機 ---- */
+@media (min-width:1024px){
+  /* 桌機：導航常駐，隱藏漢堡 */
+  .nav-toggle{display:none}
+  .nav-mask{display:none}
+  .main-nav{
+    position:static;max-height:none;overflow:visible;
+    display:flex;align-items:center;gap:2px;
+    background:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+    border:none;padding:0;transform:none;opacity:1;visibility:visible;box-shadow:none;
+  }
+  .main-nav a{
+    padding:9px 11px;font-size:.84rem;border-left:none;border-radius:8px;white-space:nowrap;
+  }
+  .main-nav a:hover{transform:translateY(-1px)}
+  .brand img{width:40px;height:40px}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-4{grid-template-columns:repeat(4,1fr)}
+  .member-grid{grid-template-columns:repeat(3,1fr)}
+  .observer-list{grid-template-columns:repeat(2,1fr)}
+  .charter-wrap{grid-template-columns:250px 1fr;gap:38px;align-items:start}
+  .toc{position:sticky;top:calc(var(--nav-h) + 18px)}
+  .article{padding:34px 34px}
+  .hero-title{font-size:clamp(2.8rem,4.6vw,4rem)}
+  .hero-logo{width:140px;height:140px}
+  .section{padding:88px 0}
+}
+
+/* ---- ≥1280px：大屏 ---- */
+@media (min-width:1280px){
+  .container{max-width:1220px}
+  .member-grid{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ---- 橫屏矮屏優化 ---- */
+@media (max-height:520px) and (orientation:landscape){
+  .hero{min-height:auto;padding:calc(var(--nav-h) + 26px) 20px 40px}
+  .hero-logo{width:70px;height:70px;margin-bottom:12px}
+  .scroll-hint{display:none}
+  .main-nav{max-height:calc(100vh - var(--nav-h));}
+}
+
+/* ---- 列印 ---- */
+@media print{
+  body{background:#fff;color:#000}
+  .site-header,.main-nav,.nav-toggle,.scroll-hint,#progress,.hero-flag,.hero-veil{display:none!important}
+  .article,.info-card,.member-card{break-inside:avoid;border-color:#ccc}
+  .fade-in{opacity:1;transform:none}
+}
+
+/* =====================================================================
+   入盟申請回執卡（Web3Forms 提交結果）
+   ===================================================================== */
+.result-card{
+  border-radius:15px;padding:24px 20px;margin-top:20px;
+  animation:pop .45s var(--ease);
+}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.result-ok{
+  background:linear-gradient(150deg,rgba(0,148,230,.14),rgba(197,160,89,.07));
+  border:1px solid rgba(0,148,230,.45);
+  box-shadow:0 14px 40px rgba(0,0,0,.42);
+}
+.result-error{
+  background:rgba(217,100,106,.10);
+  border:1px solid rgba(217,100,106,.45);
+}
+.result-head{
+  font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.5;
+}
+.result-ok .result-head{color:var(--blue-lt)}
+.result-error .result-head{color:#f08a8f}
+.result-sub{
+  font-size:.85rem;color:var(--muted);line-height:1.8;margin-bottom:16px;
+}
+.result-table{
+  width:100%;border-collapse:collapse;font-size:.86rem;
+}
+.result-table tr{border-bottom:1px solid rgba(255,255,255,.09)}
+.result-table tr:last-child{border-bottom:none}
+.result-table th{
+  text-align:left;color:var(--muted);font-weight:600;
+  padding:9px 10px 9px 0;white-space:nowrap;width:38%;vertical-align:top;
+}
+.result-table td{
+  color:#fff;padding:9px 0;text-align:right;
+  overflow-wrap:anywhere;line-height:1.6;
+}
+.result-table td.hl{
+  color:var(--gold-lt);font-weight:800;letter-spacing:1px;
+}
+.status{
+  display:inline-block;padding:3px 12px;border-radius:999px;font-size:.74rem;font-weight:700;
+  background:rgba(197,160,89,.2);color:var(--gold-lt);border:1px solid rgba(197,160,89,.4);
+}
+.result-note{
+  margin-top:16px;font-size:.82rem;color:var(--muted);line-height:1.85;
+  padding-top:14px;border-top:1px solid rgba(255,255,255,.09);
+}
+
+@media (min-width:560px){
+  .result-table th{width:30%}
+  .result-card{padding:28px 26px}
+}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/img/badge_120.png" alt="奇普托斯聯盟徽標">
+      <div class="brand-text">
+        <span class="brand-cn">奇普托斯聯盟</span>
+        <span class="brand-en">CHIPTOS BLUE ARCHIVES REPUBLIC ALLIANCE</span>
+      </div>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">首頁</a>
+      <a href="about.html">聯盟簡介</a>
+      <a href="charter.html">聯盟憲章</a>
+      <a href="organization-charter.html">組織憲章</a>
+      <a href="structure.html">機關組織</a>
+      <a href="members.html">成員國</a>
+      <a href="observers.html">觀察國</a>
+      <a href="documents.html" class="active">文檔中心</a>
+      <a href="news.html">資訊中心</a>
+      <a href="join.html">加入聯盟</a>
+      <a href="contact.html">聯絡我們</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="開啟選單" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="nav-mask" id="navMask"></div>
+
+<section class="page-hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">首頁</a> <span>/</span> <span>文檔中心</span></div>
+    <h1>文檔 <span class="gold">中心</span></h1>
+    <p class="hero-desc">歷史館、組織憲章及其他規章、例行會議紀錄，悉數封存於蔚藍檔案之中。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="doc-group fade-in">
+      <h3>📜 憲章與規章</h3>
+      <a class="doc-card fade-in" href="charter.html"><span class="doc-tag core">根本大法</span><div class="doc-text"><b>奇普托斯蔚藍檔案主義共和國聯盟憲章</b><span>11 章 16 條 · 全域最高國際法</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="organization-charter.html"><span class="doc-tag core">組織規章</span><div class="doc-text"><b>奇普托斯聯盟組織憲章</b><span>7 條 · 六大機關運作細則，次於聯盟憲章</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="organization-charter.html"><span class="doc-tag rule">施行細則</span><div class="doc-text"><b>會員權利義務施行細則</b><span>成員國權利、義務與入盟、停權、除名程序</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="organization-charter.html"><span class="doc-tag rule">議事規則</span><div class="doc-text"><b>安全理事會議事規則</b><span>安理會調查、裁定與決議程序</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="organization-charter.html"><span class="doc-tag rule">程序法</span><div class="doc-text"><b>國際法院程序法</b><span>國家間爭端與重大國際糾紛之終審裁定程序</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="organization-charter.html"><span class="doc-tag rule">治理辦法</span><div class="doc-text"><b>託管理事會過渡治理辦法</b><span>區域穩定與過渡治理安排</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="organization-charter.html"><span class="doc-tag rule">宣言</span><div class="doc-text"><b>文明包容宣言</b><span>語言、文化、制度、地域風格差異之尊重原則</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="organization-charter.html"><span class="doc-tag rule">框架協定</span><div class="doc-text"><b>文化交流框架協定</b><span>文化、教育、學術全面互通</span></div><span class="doc-arrow">→</span></a>
+    </div>
+
+    <div class="doc-group fade-in">
+      <h3>🗓️ 例行會議紀錄</h3>
+      <a class="doc-card fade-in" href="documents.html"><span class="doc-tag doc">會議紀錄</span><div class="doc-text"><b>第一次例行會議紀錄</b><span>聯盟成立暨首屆大會</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="documents.html"><span class="doc-tag doc">會議紀錄</span><div class="doc-text"><b>第二次例行會議紀錄</b><span>憲章施行與六大機關建制</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="documents.html"><span class="doc-tag doc">會議紀錄</span><div class="doc-text"><b>第三次例行會議紀錄</b><span>新成員入盟與國際合作議題</span></div><span class="doc-arrow">→</span></a>
+      <a class="doc-card fade-in" href="documents.html"><span class="doc-tag doc">會議紀錄</span><div class="doc-text"><b>第四次例行會議紀錄</b><span>文明包容與區域穩定</span></div><span class="doc-arrow">→</span></a>
+    </div>
+
+    <div class="doc-group fade-in">
+      <h3>🏛️ 歷史館</h3>
+      <div class="article">
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-year">聯盟歷 · 元年</div><h4>聯盟締結成立</h4><p class="muted">各締約方正式締結本憲章，設立奇普托斯蔚藍檔案主義共和國聯盟，確立全域最高政府間國際組織地位。</p></div>
+          <div class="tl-item"><div class="tl-year">聯盟歷 · 二年</div><h4>六大機關建制</h4><p class="muted">聯盟大會、安全理事會、經濟社會理事會、國際法院、託管理事會、聯盟秘書處陸續建制運作。</p></div>
+          <div class="tl-item"><div class="tl-year">聯盟歷 · 三年</div><h4>成員擴充與文明包容宣言</h4><p class="muted">多國完成入盟審核，聯盟確立文明差異合法存在原則，推動各領域全面互通。</p></div>
+          <div class="tl-item"><div class="tl-year">聯盟歷 · 現今</div><h4>全域治理深化</h4><p class="muted">12 個正式成員國、4 個觀察員國共同維繫區域和平、國際安全與文明永續。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-brand">
+      <img src="assets/img/badge_120.png" alt="奇普托斯聯盟徽標">
+      <div>
+        <h4>奇普托斯蔚藍檔案主義共和國聯盟</h4>
+        <p class="muted">Chiptos Blue Archives Republic Alliance · 與聯合國同級之國際政府間組織</p>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <p>本憲章為奇普托斯全域最高國際法 · 優先於一切區域法、國內法、自治條例</p>
+      <p>© 奇普托斯蔚藍檔案主義共和國聯盟 · 本網站為虛擬聯盟官方展示</p>
+    </div>
+  </div>
+</footer>
+<script>
+/* =====================================================================
+   奇普托斯蔚藍檔案主義共和國聯盟 · CBARA 互動腳本
+   ===================================================================== */
+(function () {
+  'use strict';
+
+  /* ---------- 進度條 + 頁首陰影 ---------- */
+  var bar = document.getElementById('progress');
+  var hdr = document.querySelector('.site-header');
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    if (bar) bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    if (hdr) hdr.classList.toggle('scrolled', window.scrollY > 30);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- 行動選單（漢堡） ---------- */
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  var mask = document.getElementById('navMask');
+
+  function closeNav() {
+    if (!nav) return;
+    nav.classList.remove('open');
+    if (mask) mask.classList.remove('show');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  }
+  function openNav() {
+    if (!nav) return;
+    nav.classList.add('open');
+    if (mask) mask.classList.add('show');
+    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+  }
+  if (toggle && nav) {
+    toggle.addEventListener('click', function () {
+      nav.classList.contains('open') ? closeNav() : openNav();
+    });
+    // 點擊導航連結自動收起
+    nav.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') closeNav();
+    });
+  }
+  if (mask) mask.addEventListener('click', closeNav);
+  // 視窗放大回桌機時重置
+  window.addEventListener('resize', function () {
+    if (window.innerWidth >= 1024) closeNav();
+  });
+  // ESC 關閉
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeNav();
+  });
+
+  /* ---------- 滾動淡入 ---------- */
+  var fadeEls = document.querySelectorAll('.fade-in');
+  if ('IntersectionObserver' in window && fadeEls.length) {
+    var fio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('in');
+          fio.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    fadeEls.forEach(function (el) { fio.observe(el); });
+  } else {
+    fadeEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ---------- 數字滾動 ---------- */
+  var counters = document.querySelectorAll('[data-count]');
+  function runCount(el) {
+    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    var dur = 1500, t0 = performance.now();
+    function step(now) {
+      var p = Math.min((now - t0) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window && counters.length) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { runCount(en.target); cio.unobserve(en.target); }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(function (c) { cio.observe(c); });
+  } else {
+    counters.forEach(function (c) { c.textContent = c.getAttribute('data-count'); });
+  }
+
+  /* ---------- 分類篩選（成員國 / 新聞） ---------- */
+  document.querySelectorAll('[data-filter-target]').forEach(function (group) {
+    var box = document.getElementById(group.getAttribute('data-filter-target'));
+    if (!box) return;
+    var btns = group.querySelectorAll('.filter-btn');
+    var empty = group.parentNode.querySelector('.empty-state');
+
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        btns.forEach(function (x) { x.classList.remove('active'); });
+        b.classList.add('active');
+
+        var f = b.getAttribute('data-filter');
+        var shown = 0;
+
+        box.querySelectorAll('.fitem').forEach(function (it) {
+          var match = (f === 'all' || f === '' || !f) || it.getAttribute('data-cat') === f;
+          it.style.display = match ? '' : 'none';
+          if (match) shown++;
+        });
+
+        if (empty) empty.style.display = shown === 0 ? '' : 'none';
+      });
+    });
+  });
+
+  /* ---------- 憲章章節索引高亮 ---------- */
+  var tocLinks = document.querySelectorAll('.toc a');
+  var arts = document.querySelectorAll('.article');
+  if (tocLinks.length && arts.length && 'IntersectionObserver' in window) {
+    var aio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          var id = en.target.id;
+          tocLinks.forEach(function (a) {
+            a.classList.toggle('on', a.getAttribute('href') === '#' + id);
+          });
+          arts.forEach(function (a) { a.classList.toggle('on', a.id === id); });
+        }
+      });
+    }, { rootMargin: '-12% 0px -78% 0px', threshold: 0 });
+    arts.forEach(function (a) { aio.observe(a); });
+  }
+
+  /* ---------- 表單提交（Web3Forms） ---------- */
+  var W3F_ENDPOINT = 'https://api.web3forms.com/submit';
+
+  function genAppId() {
+    var d = new Date();
+    var y = d.getFullYear();
+    var r = Math.floor(Math.random() * 9000) + 1000;
+    return 'CA-' + y + '-' + r;
+  }
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function nowStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+           ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  document.querySelectorAll('form[data-web3form]').forEach(function (form) {
+    var isJoin = form.id === 'joinForm';
+    var resultBox = document.getElementById(isJoin ? 'joinResult' : 'contactResult');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // ---- 驗證 ----
+      var invalid = false, firstBad = null;
+      form.querySelectorAll('[required]').forEach(function (el) {
+        if (!el.value || !el.value.trim()) {
+          el.style.borderColor = '#d9646a';
+          invalid = true;
+          if (!firstBad) firstBad = el;
+        } else {
+          el.style.borderColor = '';
+        }
+      });
+      if (invalid) {
+        if (firstBad) firstBad.focus();
+        if (resultBox) {
+          resultBox.style.display = '';
+          resultBox.className = 'result-card result-error';
+          resultBox.innerHTML = '⚠️ 尚有必填欄位未填寫，請檢查標示紅框之欄位後重新遞交。';
+        }
+        return;
+      }
+
+      // ---- 入盟申請編號 ----
+      var appId = '';
+      if (isJoin) {
+        appId = genAppId();
+        var idField = document.getElementById('joinAppId');
+        if (idField) idField.value = appId;
+      }
+
+      var btn = form.querySelector('button[type="submit"]');
+      var old = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = '遞交中…'; }
+      if (resultBox) { resultBox.style.display = 'none'; }
+
+      var data = new FormData(form);
+
+      fetch(W3F_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: data
+      })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (res.ok && res.j && res.j.success) {
+          var html;
+          if (isJoin) {
+            html = '<div class="result-head">✅ 申請書已送達聯盟秘書處</div>' +
+              '<div class="result-sub">本申請依《聯盟憲章》第三、四、八條辦理，將提交安全理事會審議後送聯盟大會表決。</div>' +
+              '<table class="result-table">' +
+              '<tr><th>申請編號</th><td class="hl">' + esc(appId) + '</td></tr>' +
+              '<tr><th>國家 / 政體</th><td>' + esc(data.get('state_name')) + '</td></tr>' +
+              '<tr><th>代表姓名</th><td>' + esc(data.get('representative')) + '</td></tr>' +
+              '<tr><th>聯絡方式</th><td>' + esc(data.get('contact')) + '</td></tr>' +
+              '<tr><th>申請類型</th><td>' + esc(data.get('apply_type')) + '</td></tr>' +
+              '<tr><th>憲章義務</th><td>' + esc(data.get('accept_charter')) + '</td></tr>' +
+              '<tr><th>遞交時間</th><td>' + esc(nowStr()) + '</td></tr>' +
+              '<tr><th>審議狀態</th><td><span class="status">待秘書處受理</span></td></tr>' +
+              '</table>' +
+              '<p class="result-note">請妥善保存申請編號 ' + esc(appId) +
+              '，審議結果將由秘書處透過上述聯絡渠道正式通知，並公告於資訊中心。</p>';
+          } else {
+            html = '<div class="result-head">✅ 留言已送達聯盟秘書處</div>' +
+              '<div class="result-sub">秘書處將於受理後，依登記之聯絡方式儘速回覆。</div>' +
+              '<table class="result-table">' +
+              '<tr><th>稱謂</th><td>' + esc(data.get('sender_name')) + '</td></tr>' +
+              '<tr><th>聯絡方式</th><td>' + esc(data.get('contact')) + '</td></tr>' +
+              '<tr><th>事項類別</th><td>' + esc(data.get('category')) + '</td></tr>' +
+              '<tr><th>送出時間</th><td>' + esc(nowStr()) + '</td></tr>' +
+              '</table>';
+          }
+          if (resultBox) {
+            resultBox.className = 'result-card result-ok';
+            resultBox.innerHTML = html;
+            resultBox.style.display = '';
+          }
+          form.reset();
+          if (resultBox) resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          throw new Error('fail');
+        }
+      })
+      .catch(function () {
+        if (resultBox) {
+          resultBox.style.display = '';
+          resultBox.className = 'result-card result-error';
+          resultBox.innerHTML = '⚠️ 遞交失敗，請檢查網路連線後重試，或逕向聯盟秘書處聯絡。' +
+            (appId ? '<br><span style="opacity:.8;font-size:.82rem">已產生編號：' + esc(appId) + '（未送出）</span>' : '');
+        }
+      })
+      .then(function () {
+        if (btn) { btn.disabled = false; btn.textContent = old; }
+      });
+    });
+  });
+})();
+
+</script>
+</body>
+</html>
